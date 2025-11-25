@@ -11,7 +11,7 @@ def conectar_banco_dados(nome_banco= nome_banco_default):
     try:
         conexao = sql.connect(nome_banco)
         return conexao
-        print(f"Conectado ao banco de dados {nome_banco} com sucesso.")
+        
 
 
     except sql.Error as e:
@@ -56,13 +56,14 @@ def criar_tabela_exemplo(conexao, nome_tabela=nome_tabela_default):
 # Adicionar dados a Tabela de Exemplo
 def adicionar_dado_exemplo(conexao, nome_produto, preco_produto, quantidade_estoque, codigo_interno_produto, nome_tabela = nome_tabela_default):
     try:
-        cursor = conexao.cursor()
-        cursor.execute(f'''
-            INSERT INTO {nome_tabela} (nome_produto, preco_produto, quantidade_estoque, codigo_interno_produto) VALUES (?, ?, ?, ?)
-        ''', (nome_produto, preco_produto, quantidade_estoque, codigo_interno_produto))
-        conexao.commit()
-        return print(f"Dado adicionado com sucesso à tabela {nome_tabela}.")
-   
+        with conexao:
+            cursor = conexao.cursor()
+            cursor.execute(f'''
+                INSERT INTO {nome_tabela} (nome_produto, preco_produto, quantidade_estoque, codigo_interno_produto) VALUES (?, ?, ?, ?)
+            ''', (nome_produto, preco_produto, quantidade_estoque, codigo_interno_produto))
+    
+            return print(f"Dado adicionado com sucesso à tabela {nome_tabela}.")
+    
     except sql.Error as e:
          return print(f"Erro ao adicionar dado: {e}")
 
@@ -73,10 +74,11 @@ def adicionar_dado_exemplo(conexao, nome_produto, preco_produto, quantidade_esto
 # Verificar dados na Tabela de Exemplo
 def verificar_dados_exemplo(conexao, nome_tabela=nome_tabela_default):
     try:
-        cursor = conexao.cursor()
-        cursor.execute(f'SELECT * FROM {nome_tabela}')
-        linhas = cursor.fetchall()
-        return linhas
+        with conexao:
+            cursor = conexao.cursor()
+            cursor.execute(f'SELECT * FROM {nome_tabela}')
+            linhas = cursor.fetchall()
+            return linhas
    
     except sql.Error as e:
         return print(f"Erro ao verificar dados: {e}")
@@ -87,14 +89,15 @@ def verificar_dados_exemplo(conexao, nome_tabela=nome_tabela_default):
 
 
 # Atualizar dado na tabela de exmplo
-def atualizar_dado_exemplo(conexao, id, novo_nome_produto, novo_preco_produto, nova_quantidade_estoque, novo_codigo_interno_produto, nome_tabela=nome_tabela_default):
+def atualizar_dado_exemplo(conexao, novo_nome_produto, novo_preco_produto, nova_quantidade_estoque, novo_codigo_interno_produto, nome_tabela=nome_tabela_default):
     try:
-        cursor = conexao.cursor()
-        cursor.execute(f'''
-            UPDATE {nome_tabela} SET nome_produto = ?, preco_produto = ?, quantidade_estoque = ?, codigo_interno_produto = ? WHERE id = ?
-        ''', (novo_nome_produto, novo_preco_produto, nova_quantidade_estoque, novo_codigo_interno_produto, id))
-        conexao.commit()
-        return print(f"Dado atualizado com sucesso na tabela {nome_tabela}.")
+        with conexao:
+            cursor = conexao.cursor()
+            cursor.execute(f'''
+                UPDATE {nome_tabela} SET nome_produto = ?, preco_produto = ?, quantidade_estoque = ?, codigo_interno_produto = ? WHERE id = ?
+            ''', (novo_nome_produto, novo_preco_produto, nova_quantidade_estoque, novo_codigo_interno_produto, ))
+            conexao.commit()
+            return print(f"Dado atualizado com sucesso na tabela {nome_tabela}.")
    
     except sql.Error as e:
         print(f"Erro ao atualizar dado: {e}")
@@ -105,12 +108,14 @@ def atualizar_dado_exemplo(conexao, id, novo_nome_produto, novo_preco_produto, n
 # Excluir dado na tabela de exemplo
 def excluir_dado_exemplo(conexao,id, nome_tabela=nome_tabela_default):
     try:
-        cursor = conexao.cursor()
-        cursor.execute(f'''
-            DELETE FROM {nome_tabela} WHERE id = ?
-        ''', (id,))
-        conexao.commit()
-        print(f"Dado excluído com sucesso da tabela {nome_tabela}.")
+        with conexao:
+
+            cursor = conexao.cursor()
+            cursor.execute(f'''
+                DELETE FROM {nome_tabela} WHERE id = ?
+            ''', (id,))
+            conexao.commit()
+            print(f"Dado excluído com sucesso da tabela {nome_tabela}.")
    
     except sql.Error as e:
         print(f"Erro ao excluir dado: {e}")

@@ -57,9 +57,8 @@ while True:
             novo_preco_produto = float(input("Digite o novo preço do produto: "))
             nova_quantidade_estoque = int(input("Digite a nova quantidade do produto: "))
             novo_codigo_interno_produto = input("Digite o novo código interno do produto: ")
-            id_produto = int(input("Digite o ID do produto a ser atualizado: "))
             conexao = cbd.conectar_banco_dados()
-            cbd.atualizar_dado_exemplo(conexao, id_produto, novo_nome_produto, novo_preco_produto, nova_quantidade_estoque, novo_codigo_interno_produto)
+            cbd.atualizar_dado_exemplo(conexao,novo_nome_produto, novo_preco_produto, nova_quantidade_estoque, novo_codigo_interno_produto)
         case 4:
             id_produto = int(input("Digite o ID do produto a ser excluído: "))
             conexao = cbd.conectar_banco_dados()
