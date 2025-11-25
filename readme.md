@@ -1,22 +1,29 @@
-# Gerenciador de Usuários com SQLite 🐍
+# 📦 Gerenciador de Estoque de Papelaria (CRUD CLI)
 
-Este é um projeto desenvolvido para praticar conceitos fundamentais de Python, incluindo manipulação de banco de dados **SQLite** e operações **CRUD** (Create, Read, Update, Delete).
+Este é um projeto simples, desenvolvido em Python, que simula um sistema de **Gerenciamento de Estoque** via interface de linha de comando (CLI). Utiliza o banco de dados **SQLite** para persistir os dados do estoque de uma papelaria.
 
-## 🚀 Funcionalidades
+O objetivo do projeto é demonstrar a aplicação das operações **CRUD** (Create, Read, Update, Delete) em um contexto prático.
 
-- Adicionar novos usuários (Nome e Idade).
-- Listar todos os usuários cadastrados.
-- Atualizar dados de um usuário existente.
-- Remover usuários do banco de dados.
-- Persistência de dados automática em arquivo `.db`.
+## ⚙️ Funcionalidades Implementadas
+
+O sistema permite realizar as seguintes operações no estoque:
+
+1.  **Adicionar Item (Create):** Insere um novo produto no estoque (Nome, Preço, Quantidade e Código Interno).
+2.  **Visualizar Itens (Read):** Lista todos os produtos cadastrados.
+3.  **Atualizar Item (Update):** Modifica os dados de um produto existente pelo seu ID.
+4.  **Excluir Item (Delete):** Remove um produto do banco de dados pelo ID.
 
 ## 🛠️ Tecnologias
 
-- Python 3
-- SQLite3
+* **Linguagem:** Python 3.10+ (Utiliza a sintaxe `match/case`)
+* **Banco de Dados:** SQLite3 (Embutido no Python)
 
-## 📦 Como rodar
+## 📦 Como rodar o projeto
 
-1. Clone o repositório.
-2. Execute o arquivo principal:
-   python main.py
+1.  **Pré-requisitos:** Certifique-se de ter o Python 3 instalado.
+2.  **Estrutura:** Garanta que os arquivos `main.py` (código principal) e `database.py` (manipulação do banco) estão na mesma pasta.
+3.  **Execução:** Abra o terminal na pasta do projeto e execute:
+    ```bash
+    python main.py
+    ```
+    O arquivo do banco de dados (`Estoque_papelaria.db`) será criado automaticamente na primeira execução.
